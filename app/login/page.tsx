@@ -1,8 +1,23 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn, signOut, useSession } from "next-auth/react";
+// these utility func are make the signin and sigup flow incredibly simple
 
 const LoginPage = () => {
+  const router = useRouter();
+  const { data, status } = useSession();
+
+  if (status === "loading") {
+    return <div>loading...</div>;
+  }
+  if (status === "authenticated") {
+    return router.push("/");
+  }
+
   return (
     <div className="p-4 h-[calc(100vh-9rem)] md:h-[calc(100vh-188px)] flex items-center justify-center">
       {/* BOX */}
@@ -15,7 +30,10 @@ const LoginPage = () => {
         <div className="p-6 h-2/3 flex flex-col gap-4 md:h-full md:w-1/2">
           <h1 className="font-bold text-xl xl:text-3xl">Welcome</h1>
           <p>Log into your account or create a new one using social buttons</p>
-          <button className="flex items-center gap-4 p-4 ring-2 ring-orange-100 rounded-md">
+          <button
+            className="flex items-center gap-4 p-4 ring-2 ring-orange-100 rounded-md"
+            onClick={() => signIn()}
+          >
             <Image
               src="/google.png"
               alt=""

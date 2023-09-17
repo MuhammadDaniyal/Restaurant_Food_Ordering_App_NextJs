@@ -1,8 +1,21 @@
 import { featuredProducts } from "@/data";
+import { ProductType } from "@/types/ProductType";
 import Image from "next/image";
 import React from "react";
 
-const Featured = () => {
+const getFeaturedData = async () => {
+  const res = await fetch("http://localhost:3000/api/products", {
+    cache: "no-cache", // by defult it cache our data it's actully good but for dev purpose to see our items better iam not going to cache data
+  });
+  if (!res.ok) {
+    throw new Error("Failed to Fetch Category");
+  }
+  const data = await res.json();
+  return data;
+};
+
+const Featured = async () => {
+  // const featuredProducts: ProductType[] = await getFeaturedData();
   return (
     <div className="  overflow-x-scroll text-red-500 scrollbar-hide">
       {/* WRAPPER */}

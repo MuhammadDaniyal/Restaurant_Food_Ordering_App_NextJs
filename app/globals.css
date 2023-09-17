@@ -20,3 +20,11 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.card:nth-child(3n) {
+  border-right-width: 0px;
+}
+
+.card:nth-last-child(-n + 3) {
+  border-bottom-width: 0px;
+}

@@ -1,8 +1,23 @@
 import { menu } from "@/data";
 import Link from "next/link";
 import React from "react";
+import { MenuType } from "@/types/MenuType";
 
-const MenuPage = () => {
+// it's server side component we can fetch our data directly
+
+const getCategoryData = async () => {
+  const res = await fetch("http://localhost:3000/api/category", {
+    cache: "no-cache", // by defult it cache our data it's actully good but for dev purpose to see our items better iam not going to cache data
+  });
+  if (!res.ok) {
+    throw new Error("Failed to Fetch Category");
+  }
+  const data = await res.json();
+  return data;
+};
+const MenuPage = async () => {
+  // const menu: MenuType = await getCategoryData();
+
   return (
     <div className=" h-[calc(100vh-6rem)] md:h-[calc(100vh-118px)] p-4 lg:px-20 xl:px-40 flex flex-col md:flex-row items-center">
       {menu.map((category) => (
