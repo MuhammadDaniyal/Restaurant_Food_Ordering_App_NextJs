@@ -1,11 +1,27 @@
+import DeleteButton from "@/components/DeleteButton";
 import Price from "@/components/Price";
-import { singleProduct } from "@/data";
+// import { singleProduct } from "@/data";
+import { ProductType } from "@/types/ProductType";
 import Image from "next/image";
 import React from "react";
 
-const SingleProductPage = () => {
+const getSingleProduct = async (id: string) => {
+  const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+    cache: "no-cache", // by defult it cache our data it's actully good but for dev purpose to see our items better iam not going to cache data
+  });
+  if (!res.ok) {
+    throw new Error("Failed to Fetch Products");
+  }
+  const data = await res.json();
+  return data;
+};
+
+const SingleProductPage = async ({ params }: { params: { id: string } }) => {
+  const singleProduct: ProductType = await getSingleProduct(params.id);
+  // console.log(singleProduct);
+
   return (
-    <div className="p-4 lg:px-20 xl:px-40 h-[calc(100vh-9rem)] md:h-[calc(100vh-188px)] flex flex-col justify-around gap-2 text-red-500 md:flex-row md:items-center md:gap-8">
+    <div className="p-4 lg:px-20 xl:px-40 h-[calc(100vh-9rem)] md:h-[calc(100vh-188px)] flex flex-col justify-around gap-2 text-red-500 md:flex-row md:items-center md:gap-8 relative">
       {/* IMAGE CONTAINER */}
       {singleProduct.img && (
         <div className="relative w-full flex-1 h-1/3 md:h-[70%]">
@@ -23,12 +39,9 @@ const SingleProductPage = () => {
           {singleProduct.title}
         </h1>
         <p>{singleProduct.desc}</p>
-        <Price
-          id={singleProduct.id}
-          price={singleProduct.price}
-          options={singleProduct.options}
-        />
+        <Price singleProduct={singleProduct} />
       </div>
+      <DeleteButton id={singleProduct.id} />
     </div>
   );
 };

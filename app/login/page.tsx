@@ -4,12 +4,14 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 // these utility func are make the signin and sigup flow incredibly simple
 
 const LoginPage = () => {
   const router = useRouter();
   const { data, status } = useSession();
+
+  console.log(status);
 
   if (status === "loading") {
     return <div>loading...</div>;
@@ -32,7 +34,7 @@ const LoginPage = () => {
           <p>Log into your account or create a new one using social buttons</p>
           <button
             className="flex items-center gap-4 p-4 ring-2 ring-orange-100 rounded-md"
-            onClick={() => signIn()}
+            onClick={() => signIn('google')}
           >
             <Image
               src="/google.png"

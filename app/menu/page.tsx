@@ -1,4 +1,4 @@
-import { menu } from "@/data";
+// import { menu } from "@/data";
 import Link from "next/link";
 import React from "react";
 import { MenuType } from "@/types/MenuType";
@@ -16,7 +16,7 @@ const getCategoryData = async () => {
   return data;
 };
 const MenuPage = async () => {
-  // const menu: MenuType = await getCategoryData();
+  const menu: MenuType = await getCategoryData();
 
   return (
     <div className=" h-[calc(100vh-6rem)] md:h-[calc(100vh-118px)] p-4 lg:px-20 xl:px-40 flex flex-col md:flex-row items-center">

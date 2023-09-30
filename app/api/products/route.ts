@@ -11,7 +11,7 @@ export const GET = async (req: NextRequest) => {
     // The object chosen in the previous step is then spread into the containing object (within the where condition of your query). The spread syntax (...) essentially takes the properties of the chosen object and adds them to the containing object.
     const products = await prisma.product.findMany({
       where: { // containing object
-        ...(category ? { categorySlug: category } : { isFeatured: true }), // Sobject chosen
+        ...(category ? { categorySlug: category } : { isFeatured: true }), // object chosen
       },
     });
     return new NextResponse(JSON.stringify(products), { status: 200 });

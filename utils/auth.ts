@@ -7,7 +7,7 @@ import { prisma } from "./connect";
 
 // update session interface totally new one session interface with the addition of admin property in user
 declare module "next-auth" {
-  interface Session {
+  interface Session { // declare new session tyoe here
     user: User & {
       isAdmin: Boolean;
     };
@@ -27,14 +27,14 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     GoogleProvider({
-      // clientId: process.env.GITHUB_ID as string, // we sure that it's a string
-      // clientSecret: process.env.GITHUB_SECRET as string,
+      // clientId: process.env.GOOGLE_ID as string, // we sure that it's a string
+      // clientSecret: process.env.GOOGLE_SECRET as string,
       clientId: process.env.GOOGLE_ID!, // its string or undefined but sure that its a string
       clientSecret: process.env.GOOGLE_SECRET!,
     }),
   ],
   callbacks: {
-    // i am going return here a new session for add a admin property in session.user
+    // i am going return here a new session with add a admin property in session.user
     async session({ token, session }) {
       if (token) {
         session.user.isAdmin = token.isAdmin; // abhi token ma isAdmin ki value ni woh JWT callback sy ayegi JWT Callback pehla run hota hy session callback sy
@@ -54,4 +54,4 @@ export const authOptions: NextAuthOptions = {
 };
 
 // useSession working only client side component but getServerSession works server side and api's too to fetch user ka session ka data and status
-export const getAuthSession = () => getServerSession(authOptions); // using this func get user and status in server side and api
+export const getAuthSession = () => getServerSession(authOptions); // using this func get user and status in server side components and apis

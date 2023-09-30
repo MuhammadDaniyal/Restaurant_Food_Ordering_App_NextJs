@@ -1,4 +1,4 @@
-import { featuredProducts } from "@/data";
+// import { featuredProducts } from "@/data";
 import { ProductType } from "@/types/ProductType";
 import Image from "next/image";
 import React from "react";
@@ -15,7 +15,7 @@ const getFeaturedData = async () => {
 };
 
 const Featured = async () => {
-  // const featuredProducts: ProductType[] = await getFeaturedData();
+  const featuredProducts: ProductType[] = await getFeaturedData();
   return (
     <div className="  overflow-x-scroll text-red-500 scrollbar-hide">
       {/* WRAPPER */}
